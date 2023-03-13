@@ -43,7 +43,8 @@ class HomePage extends StatelessWidget {
                             size: 40,
                           ),
                           onPressed: () {
-                            cartController.addToCart(controller.products[index]);
+                            cartController
+                                .addToCart(controller.products[index]);
                           },
                         )
                       ],
@@ -53,13 +54,20 @@ class HomePage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(40.0),
-            child: GetX<CartController>(
-              builder: (cartContoller) {
-                return Text("Total number in cart is ${cartContoller.cartItems.length}");
-              }
-            ),
+            child: GetX<CartController>(builder: (cartContoller) {
+              return Text(
+                  "Total price in cart it ${cartContoller.totalPrice!.toStringAsFixed(2)}");
+            }),
           )
         ],
+      ),
+      floatingActionButton: GetX<CartController>(
+        builder: (_) {
+          return FloatingActionButton.extended(
+              onPressed: () {},
+              icon: Icon(Icons.add_shopping_cart),
+              label: Text(_.itemsInCart.toString()));
+        },
       ),
     ));
   }
