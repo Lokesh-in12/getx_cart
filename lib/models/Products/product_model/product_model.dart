@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import 'rating.dart';
 
 class ProductModel {
@@ -8,6 +10,9 @@ class ProductModel {
   String? category;
   String? image;
   Rating? rating;
+
+  final isFavorite = false.obs;
+  var quantity = 0.obs;
 
   ProductModel({
     this.id,

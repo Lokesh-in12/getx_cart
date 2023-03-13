@@ -37,36 +37,92 @@ class HomePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        CupertinoButton(
-                          child: Icon(
-                            Icons.add_box,
-                            size: 40,
+                        // Obx(() => ElevatedButton.icon(
+                        //     onPressed: () {
+                        //       controller.products[index].isFavorite.toggle();
+                        //     },
+                        //     icon: Icon(
+                        //         controller.products[index].isFavorite.value
+                        //             ? Icons.check_box_outlined
+                        //             : Icons.check_box_outline_blank),
+                        //     label: Text(""))),
+                        // CupertinoButton(
+
+                        //   child: Icon(
+                        //     Icons.add_box,
+                        //     size: 40,
+                        //   ),
+                        //   onPressed: () {
+                        //     cartController
+                        //         .handleQuanityCart(controller.products[index]);
+                        //   },
+                        // )
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              CupertinoButton(
+                                child: Icon(
+                                  Icons.add_box,
+                                  size: 40,
+                                ),
+                                onPressed: () {
+                                  cartController
+                                      .addToCart(controller.products[index]);
+                                },
+                              ),
+                              Obx(() => Text(controller.products[index].quantity
+                                  .toString())),
+                              CupertinoButton(
+                                child: Icon(
+                                  Icons.remove,
+                                  size: 40,
+                                ),
+                                onPressed: () {
+                                  cartController.removeFromCart(
+                                      controller.products[index]);
+                                },
+                              ),
+                            ],
                           ),
-                          onPressed: () {
-                            cartController
-                                .addToCart(controller.products[index]);
-                          },
                         )
                       ],
                     );
                   });
             }),
           ),
-          Padding(
-            padding: const EdgeInsets.all(40.0),
-            child: GetX<CartController>(builder: (cartContoller) {
-              return Text(
-                  "Total price in cart it ${cartContoller.totalPrice!.toStringAsFixed(2)}");
-            }),
-          )
+
+          //using GetX
+          // Padding(
+          //   padding: const EdgeInsets.all(40.0),
+          //   child: GetX<CartController>(builder: (cartContoller) {
+          //     return Text(
+          //         "Total price in cart it ${cartContoller.totalPrice!.toStringAsFixed(2)}");
+          //   }),
+          // )
+
+          //using GetBuilder
+          // Padding(
+          //   padding: const EdgeInsets.all(40.0),
+          //   child: GetBuilder<CartController>(builder: (cartContoller) {
+          //     return Text(
+          //         "Total price in cart it ${cartContoller.totAmountWithGetBuilder.toString()}");
+          //   }),
+          // )
+
+          //using Obx
+
+          Obx(() {
+            return Text(
+                "Total price in cart it ${cartController.totalPrice.toString()}");
+          })
         ],
       ),
       floatingActionButton: GetX<CartController>(
-        builder: (_) {
+        builder: (controller) {
           return FloatingActionButton.extended(
               onPressed: () {},
               icon: Icon(Icons.add_shopping_cart),
-              label: Text(_.itemsInCart.toString()));
+              label: Text(controller.itemsInCart.toString()));
         },
       ),
     ));
